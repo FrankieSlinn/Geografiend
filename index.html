@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheet.css"> 
+    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>GeograFiend</title>
+
+</head>
+<body>
+    <nav>
+           
+        <div class = "help nav-link"><svg xmlns="http://www.w3.org/2000/svg"  fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg></div>
+        <div class = "title">
+            <h1>GeograFiend</h1>
+    </div>
+    <div class = "stats nav-link"> <svg xmlns="http://www.w3.org/2000/svg"  fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+      </svg></div>
+    
+    </nav>
+    <div class = "statsContent" hidden>
+        <div class="close">
+        <button class = "closeButtonStats" >X</button>
+    </div>
+        <div class = "statsText">
+        <h2>GeograFiend Stats</h2><br>
+        <p>
+        Game Score<br>
+        Games Played<br>
+        Average Score<br>
+        </p>
+        </div>
+    </div>
+    <div class = "helpContent" hidden>
+        <div class="close">
+        <button class = "closeButtonHelp" >X</button>
+    </div>
+        <div class = "helpText">
+        <h2>About GeograFiend</h2>
+        <br>
+        <p>Guess the country with as few clues as possible.</p>
+        </div>
+    </div>
+    
+    <div class = "overallContainer">
+    <div class = "questions">
+    <h2 class = "quizDesc">The Country Quiz</h2>
+    <div class = "instruction">Guess the Country / Territory with as Few Clues as Possible</div>
+    <br>
+    <input type="text"  class = "answer1 answer" placeholder="Type country and select" autocomplete="autocomplete_off_randString">
+    <div class = "feedback"></div>
+    <span class = "spanBut" hidden>
+        <button type = button class="First  option" id = "firstLabel" ></button>
+        <button type = button class="Second  option" id = "secondLabel"></button>
+        <button type = button class="Third  option" id = "thirdLabel"></button>
+        <button type = button class="Fourth  option" id = "fourthLabel"></button>
+        <button type = button class="Fifth  option" id = "fifthLabel"></button>   
+    </span>
+    
+    <div class = "question5 question"></div>
+    <div class = "question4 question" ></div>
+    <div class = "question3 question"></div>
+    <div class = "question2 question"></div>
+    <div class = "showFlag" hidden></div>
+    <div class = "question1 question"></div>
+  
+<!--Predictive Text Buttons-->
+<div class = "wonGame"></div>
+<button class = "startGame" hidden>Have Another Go</button>
+</div>
+ <br>
+<div class = "coffee">🖤 CountryFiend? <a href = "https://ko-fi.com/fkissling">Buy Me A Coffee</a>!</div>   
+    
+<footer class = "copyright">@2022 F. Kissling</footer>    
+</div>
+<script src="control.js"></script>
+</body>
+</html>
