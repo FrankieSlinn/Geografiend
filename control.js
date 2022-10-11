@@ -208,7 +208,6 @@ let countryCodes = [
   'US',
   'UY',
   'UZ',
-  'VA',
   'VC',
   'VE',
   'VG',
@@ -499,7 +498,7 @@ CN:'China',
 CO:'Colombia',
 CR:'Costa Rica',
 CU:'Cuba',
-CV:'Cape Verde',
+CV:'Cabo Verde',
 CW:'Curacao',
 CY:'Cyprus',
 CZ:'Czechia',
@@ -582,7 +581,7 @@ MK:'North Macedonia',
 ML:'Mali',
 MM:'Myanmar',
 MN:'Mongolia',
-MO:'Macao',
+MO:'Macau',
 MP:'Northern Mariana Islands',
 MQ:'Martinique',
 MR:'Mauritania',
@@ -659,7 +658,6 @@ UG:'Uganda',
 US:'United States',
 UY:'Uruguay',
 UZ:'Uzbekistan',
-VA:'Vatican City',
 VC:'Saint Vincent and the Grenadines',
 VE:'Venezuela',
 VG:'British Virgin Islands',
@@ -697,18 +695,73 @@ let countryNameMapLow = "";
 //let finalScore = "";
 let turns = 0;
 let score = 0;
-let answers = [".answer1", ".answer2", ".answer3", ".answer4", ".answer5"];
-let finalScores = ["100", "80", "60", "40", "20"];
+let finalScores = ["100", "80", "60", "40", "20","0"];
 //let feedback = [".feedback1", ".feedback2", ".feedback3", ".feedback4", ".feedback5"];
 
 let populationDec = 0; 
 
-startNewGame();
+//set scores in beginning
+let averageScore = 0;
+//temp holding place
+let longScores = [];
+let gamesPlayed = JSON.parse(localStorage.getItem("longGameScores")) != null
+? JSON.parse(localStorage.getItem("longGameScores")).length
+: 0;
+let gameScore = 0;
+//let gameScores = [];
+//let statsScore = 0;
+let longGames =[];
+let longGameScores = [];
+console.log("JSON.parse(localStorage.getItem(gameScore))==null)", localStorage.setItem("gameScore", JSON.stringify(0))) ;
+
+if(JSON.parse(localStorage.getItem("gameScore"))==null){
+  localStorage.setItem("gameScore", JSON.stringify(0));
+}
+
+
+  
+console.log("json.pase localstorage is not null", JSON.parse(localStorage.getItem("longGameScores")) != null)
+  if(JSON.parse(localStorage.getItem("longGameScores"))!=null){averageScore = JSON.parse(localStorage.getItem("longGameScores")).length != 0?
+  JSON.parse(localStorage.getItem("longGameScores")).reduce((numa, numb) => numa + numb, 0) / JSON.parse(localStorage.getItem("longGameScores")).length
+    .toFixed(0):0;}
+    console.log("averageScore", averageScore);
+    console.log("longGameScores", JSON.parse(localStorage.getItem("longGameScores")));
+    window.localStorage.setItem("averageScore", JSON.stringify(averageScore));
+console.log("JSON.parse(localStorage.getItem(longgamescores)!=null", JSON.parse(localStorage.getItem("longGameScores")) != null);
+    /*JSON.parse(localStorage.getItem("longGameScores")) != null?localStorage.setItem(("gameScore"), JSON.parse(localStorage.getItem("longGameScores"))[
+      JSON.parse(localStorage.getItem("longGameScores")).length - 1]): localStorage.setItem("gameScore", JSON.stringify(0));
+*/
+      console.log("gameScore in beginning", JSON.parse(localStorage.getItem("gameScore")));
+
+  console.log("countryname map length",countryNameMap.length)
+
+
+  //Score for last game
+  /*
+    statsScore = JSON.parse(localStorage.getItem("longGameScores")) != null
+    ?JSON.parse(localStorage.getItem("longGameScores"))[
+      JSON.parse(localStorage.getItem("longGameScores")).length - 1
+      
+    ]:0;*/
+  
+  
+
+//let longGames =
+ // JSON.parse(localStorage.getItem("longGameScores")) != null
+ //   ? JSON.parse(localStorage.getItem("longGameScores")).length
+ //   : 0;
+//console.log("longgames", longGames);
+console.log("longGameScores in beginning", JSON.parse(localStorage.getItem("longGameScores")));
+//console.log("gameScore in beginning",(JSON.parse(localStorage.getItem("gameScore"))!=null?JSON.parse(localStorage.getItem("gameScore")):0));
+
+//start New Game after load
+document.addEventListener("load", startNewGame());
+
 //Math.round(JSON.parse(localStorage.getItem("population")) * 100) / 100;
 //console.log("population", population);
-//console.log("localstoragepopulation", JSON.parse(localStorage.getItem("population")));
+console.log("longgamescores", JSON.parse(localStorage.getItem("longGameScores")));
 //console.log("populationDec",populationDec)
-
+document.querySelector(".scores").innerHTML = `GeograFiend Game Score: <strong>${JSON.parse(localStorage.getItem("gameScore"))}%</strong><br><br>Games Played: <strong>${gamesPlayed}</strong><br><br>Average Score: <strong>${averageScore.toFixed(0)}%</strong>`
 
 //Popups
 
@@ -728,7 +781,10 @@ document
     document.querySelector(".overallContainer").style["display"] = "inline";
     document.querySelector(".overallContainer").style["z-index"] = "1";
     document.querySelector(".statsContent").style["display"] = "none";
+    //document.querySelector(".scores").innerHTML = `GeograFiend Game Score: ${gameScore}%<br><br>Games Played:${JSON.parse(localStorage.getItem("longGameScores")).length}<br><br>`
   });
+console.log("longGameScores in beginning", JSON.parse(localStorage.getItem("longGameScores")));
+//console.log("gameScore", JSON.parse(localStorage.getItem("gameScore")));
 
 //Show Popup Content - Help
 document.querySelector(".help").addEventListener("click", function () {
@@ -739,6 +795,16 @@ document.querySelector(".help").addEventListener("click", function () {
   document.querySelector(".helpContent").style["display"] = "inline-block";
 });
 
+//Close Button - Help
+document
+  .querySelector(".closeButtonHelp")
+  .addEventListener("click", function () {
+    document.querySelector(".overallContainer").style["display"] = "inline";
+    document.querySelector(".overallContainer").style["z-index"] = "1";
+    document.querySelector(".helpContent").style["display"] = "none";
+  });
+
+  //get question1 to always show
 document.querySelector(".question1").style["display"] = "inline-block";
 //generate country / countrycode
 function getCountry(){
@@ -801,28 +867,18 @@ console.log("populationDec",populationDec)
 //populating question one and two flag here to keep value
 console.log("country in pop api", JSON.parse(localStorage.getItem("country")))
 if(roundPop ==0){
-  document.querySelector(".question1").innerHTML = `Clue #1: This country has a population of under 100'000`}
+  document.querySelector(".question1").innerHTML = `<strong>Clue #1:</strong> This country has a population of under 100'000`}
   else{populationDec = roundPop;
-    document.querySelector(".question1").innerHTML = `Clue #1: This country has a population of ${populationDec} million`};
+    document.querySelector(".question1").innerHTML = `<strong>Clue #1:</strong> This country has a population of ${populationDec} million`};
 turns = 0;
 
+document.querySelector(".answer").style[".display"] = "inline-block";
 
-document.querySelector(".answer1").style[".display"] = "inline-block";
-flagWithUnderscore = JSON.parse(localStorage.getItem("country")).replaceAll(
-  " ",
-  "_"
-);
-console.log("flagwunderscore", flagWithUnderscore);
-let pngName =
-"<img src = Images/" +
-flagWithUnderscore +
-'.png  style="width:400px;height:250px;">';
-document.querySelector(".showFlag").innerHTML = pngName;
 
 });
 
 
-xhr.open("GET", `http://api.worldbank.org/v2/country/${countryCodes[JSON.parse(localStorage.getItem("randomNum"))]}/indicator/SP.POP.TOTL?date=2021`);
+xhr.open("GET", `https://api.worldbank.org/v2/country/${countryCodes[JSON.parse(localStorage.getItem("randomNum"))]}/indicator/SP.POP.TOTL?date=2021`);
 //xhr.open("GET", "http://api.worldbank.org/v2/country/gb");
 //xhr.setRequestHeader("X-RapidAPI-Key", "9befc1d2a6msh43bf070da1abde6p1d37c1jsn616d294fe695");
 console.log("localstoragepopulation", JSON.parse(localStorage.getItem("population")));
@@ -870,12 +926,12 @@ console.log("capital before function", x);
 
   
 
-document.querySelector(".question4").innerHTML = `Clue #4: The country's capital city is ${capitalCity}`;
+document.querySelector(".question4").innerHTML = `<strong>Clue #4:</strong> The country's capital city is ${capitalCity}`;
 console.log("question4 innerhtml", document.querySelector(".question4").value);
 
 });
 
-cap.open("GET", `http://api.worldbank.org/v2/country/${countryCodes[JSON.parse(localStorage.getItem("randomNum"))]}`);
+cap.open("GET", `https://api.worldbank.org/v2/country/${countryCodes[JSON.parse(localStorage.getItem("randomNum"))]}`);
 
 //http://api.worldbank.org/v2/country/${countryCodes[JSON.parse(localStorage.getItem("randomNum"))]}/indicator/SP.POP.TOTL?date=2021`);
 cap.send(capInfo);
@@ -897,9 +953,7 @@ function randomNumber() {
 
 //Predictive Text
   /**** PREDICTIVE TEXT *****/
-//let answer1 = document.querySelector(".answer1");
-//let answer2 = document.querySelector(".answer2");
-//console.log("turns", turns);
+
 typeAnswer();
 
 function typeAnswer(){
@@ -911,7 +965,7 @@ function typeAnswer(){
    // console.log("answer1value", document.querySelector(".answer1").value);
 
   document.querySelector(".answer").addEventListener("keyup", function (e) {
-   console.log("answeri", document.querySelector(".answer"));
+   //console.log("answeri", document.querySelector(".answer"));
     //e.preventDefault();
     //document.querySelector(".selection").innerHTML = "";
     document.querySelector(".spanBut").style["display"] = "inline-block";
@@ -921,7 +975,7 @@ function typeAnswer(){
    let countryNameMapLow = String(countryNameMap).toLowerCase();
 
     let keysJoin = String(answerQuery.value).toLowerCase();
-   // console.log("keysjoin", keysJoin);
+   console.log("keysjoin", keysJoin);
     //flagsCopy used to ensure all answer o
     let countryi = "";
     //console.log("county name i before function", Object.values(countryNameMap)[1])
@@ -968,8 +1022,8 @@ function typeAnswer(){
     function defineButtonText() {
       for (i = 0; i < buttonClasses.length; i++) {
         document.querySelector(buttonClasses[i]).style["visibility"] = "visible";
-        console.log("countrypredict", countryPredict[i]);
-        console.log("buttonClasses i in defineButtonText", buttonClasses[i])
+        //console.log("countrypredict", countryPredict[i]);
+        //console.log("buttonClasses i in defineButtonText", buttonClasses[i])
         if (countryPredict[i]) {
           document.querySelector(
             buttonClasses[i]
@@ -978,7 +1032,7 @@ function typeAnswer(){
           //document.querySelector(".First").style["display"] = "inline-block";
           document.querySelector(buttonClasses[i]).style["display"] =
             "inline-block";
-            console.log("buttonClasses i in defineButtonText.innerhtml", document.querySelector(buttonClasses[1]).innerHTML)
+            //console.log("buttonClasses i in defineButtonText.innerhtml", document.querySelector(buttonClasses[1]).innerHTML)
         } else {
           document.querySelector(buttonClasses[i]).style["display"] = "none";
         }
@@ -1018,10 +1072,7 @@ function typeAnswer(){
       localStorage.setItem("inputValue", JSON.stringify(inputValue))
       document.querySelector(buttonClasses[buttonClicked - 1]).checked = false;
       document.getElementById(labelContent[buttonClicked - 1]).innerHTML == "";
-    
-      //document.querySelector(".container").style["visibility"] = "visible";
-    
-    
+   
       inputValLow = inputValue.toLowerCase();
       inputValue = "";
 
@@ -1042,11 +1093,7 @@ function typeAnswer(){
         localStorage.setItem("isIncorrect", JSON.stringify(false));
         //correct();
         console.log("correct");
-       
-        //score = JSON.parse(localStorage.getItem("score"));
-        //score1 = score += 1;
-        //localStorage.setItem("score", JSON.stringify(score1));
-        //starFill();
+
       } else {
         localStorage.setItem("isIncorrect", JSON.stringify(true));
         localStorage.setItem("isCorrect", JSON.stringify(false));
@@ -1056,13 +1103,7 @@ function typeAnswer(){
       }
       inputValLow = "";
       showResult();
-      /*
-      if (JSON.parse(localStorage.getItem("turns")) < 4) {
-        first4Turns();
-      } else if (JSON.parse(localStorage.getItem("turns")) == 4) {
-        longGameStats();
-        fifthTurn();
-      }*/
+
     }
     console.log("score", JSON.parse(localStorage.getItem("score")));
 function getScore(){
@@ -1070,7 +1111,29 @@ function getScore(){
     finalScore = "100%";
   }
 }
-//console.log("score", score)
+
+function updateScores(){
+  longGames.push(JSON.parse(localStorage.getItem("gameScore")));
+  console.log("gameScore after set", longGames);
+ console.log("longScores when being calculated(pushed)", longGames);
+console.log("longGameScores = []", JSON.parse(localStorage.getItem("longGameScores")) == []);
+
+longGameScores =
+JSON.parse(localStorage.getItem("longGameScores")) == null
+  ? longGames
+  : JSON.parse(localStorage.getItem("longGameScores")).concat(JSON.parse(localStorage.getItem("gameScore")));
+console.log("longGameScores after concat", longGameScores);
+longGames = []; 
+console.log("longGameScores after concat", longGameScores);
+
+localStorage.setItem("longGameScores", JSON.stringify(longGameScores));
+//define averageScore after change
+averageScore = JSON.parse(localStorage.getItem("longGameScores")).length != 0?
+JSON.parse(localStorage.getItem("longGameScores")).reduce((numa, numb) => numa + numb, 0) / JSON.parse(localStorage.getItem("longGameScores")).length.toFixed(0):0;
+//amend stats message after score change
+document.querySelector(".scores").innerHTML = `GeograFiend Game Score: <strong>${JSON.parse(localStorage.getItem("gameScore"))}%</strong><br><br>Games Played: <strong>${JSON.parse(localStorage.getItem("longGameScores")).length}</strong><br><br>Average Score: <strong>${averageScore.toFixed(0)}%</strong>`
+}
+//consfuncole.log("score", score)
 
 //after question answered, feedback, go to next question
     function showResult(){
@@ -1090,18 +1153,35 @@ function getScore(){
       document.querySelector(".answer").style["display"] = "none";
       console.log("inscorrect", JSON.parse(localStorage.getItem("isCorrect")));
       if(JSON.parse(localStorage.getItem("isCorrect")) ==true){
+        document.querySelector(".feedback").style["display"] ="inline-block";
+        document.querySelector(".startGame").style["display"] ="inline-block";
+        document.querySelector(".spanBut").style["display"] ="none";
+        document.querySelector(".option").style["display"] ="none";
         //let scoreNew = JSON.parse(localStorage.getItem("score"))+=1;
         //localStorage.setItem("score", JSON.stringify(scoreNew));
-        document.querySelector(".feedback").innerHTML = `Congratulations, ${localStorage.getItem("country")} is correct -  Your score is ${finalScores[turns]}`
-        ;
-        document.querySelector(".feedback").style["display"] ="inline-block";
-       document.querySelector(".startGame").style["display"] ="inline-block";
-       document.querySelector(".spanBut").style["display"] ="none";
-       document.querySelector(".option").style["display"] ="none";
-       document.querySelector(".answer").style["display"] ="none";
-       score = 0;
+        document.querySelector(".feedback").innerHTML = `<strong>Congratulations, ${localStorage.getItem("country")} is <span class = "right">correct</span> <br><br></strong>  Your game score is <strong>${finalScores[turns]}%</strong>`;
+        document.querySelector(".right").style["color"] ="green";
+       
+        //getscores define gameScore for latest game
+        finalScores[turns]!=null?
+        localStorage.setItem("gameScore", JSON.stringify(Number(finalScores[turns]))):localStorage.setItem("gameScore", JSON.stringify(0));
+        console.log("gameScore", JSON.parse(localStorage.getItem("gameScore")));
+        //ensure stats reflects latest scores
+        updateScores();
+        //temp arrray to hold game34);
+
+
+ 
+
+        
+        //document.querySelector(".feedback").style["background-color"] ="#333";
+       // document.querySelector(".feedback").style["color"] ="#fff";
+
+       
+       
       }
       else if(JSON.parse(localStorage.getItem("isIncorrect")) ==true) {
+        turns+=1;
         document.querySelector(".spanBut").style["display"] = "none";
       
         //console.log("score in showResult function", JSON.parse(localStorage.getItem("score")));
@@ -1109,27 +1189,35 @@ function getScore(){
           console.log("turns false answer", turns);
   
         //  console.log("feedback i ", document.querySelector(`${feedback[i]}`).value)
-        document.querySelector(".feedback").innerHTML = `Unlucky, ${JSON.parse(localStorage.getItem("inputValue"))} isn't correct - Here's another clue:`
+        document.querySelector(".feedback").innerHTML = `Unlucky, ${JSON.parse(localStorage.getItem("inputValue"))} is <span class = "incorrect">incorrect</span> - Here's another clue:`
+        document.querySelector(".incorrect").style["color"] = "red";
         document.querySelector(".feedback").style["display"] = "inline-block";
       };
       
       
-      if(turns ==4){
-        document.querySelector(".feedback").innerHTML = `Unlucky that isn't correct, the correct answer is ${JSON.parse(localStorage.getItem("country"))} - The Game Score is 0%`
+      if(turns ==5){
+        document.querySelector(".feedback").innerHTML = `<strong>Unlucky that isn't correct, the correct answer is ${JSON.parse(localStorage.getItem("country"))} - The Game Score is 0%</strong>`
+        //set gamescore after change
+        localStorage.setItem("gameScore", JSON.stringify(0));
+        updateScores();
         document.querySelector(".startGame").style["display"] = "inline-block";
-        //document.querySelector(".answer5").style["display"] = "none";
+        document.querySelector(".answer").style["display"] = "none";
       }
 
       console.log("show result turns after increase", turns);
       
-      turns+=1;
+     
     }
       //show 2nd clue
     if (turns==1){
       console.log("turns 1 running");
-      document.querySelector(".question2").innerHTML = `Clue #2: Here is the flag of this country`;
+      document.querySelector(".question2").innerHTML = `<strong>Clue #2:</strong> Here is the flag of this country`;
       document.querySelector(".question2").style["display"] = "inline-block";
-      document.querySelector(".answer").style["display"] = "inline-block";
+      document.querySelector(".showFlag").style["display"] = "inline-block";
+      if(JSON.parse(localStorage.getItem("isCorrect")) !=true){
+      document.querySelector(".answer").style["display"] = "inline-block"}else{
+        document.querySelector(".answer").style["display"] = "none"
+      };
       
       //document.querySelector(".spanBut2").innerHTML = `${spanBut}`;
       document.querySelector(".spanBut").style["display"] = "none";
@@ -1144,10 +1232,13 @@ function getScore(){
       //console.log(typeof(rightCountryCodeVar));
      console.log("continentMap.countCode", continentMap.countCode);
       console.log()
-      document.querySelector(".question3").innerHTML = `Clue #3: The country is all or mostly located in this continent: ${continentMap[countCode]}`;
+      document.querySelector(".question3").innerHTML = `<strong>Clue #3:</strong> The country is fully or mostly located in this continent: ${continentMap[countCode]}`;
       document.querySelector(".question3").style["display"] = "inline-block";
      
-      document.querySelector(".answer").style["display"] = "inline-block";
+      if(JSON.parse(localStorage.getItem("isCorrect")) !=true){
+        document.querySelector(".answer").style["display"] = "inline-block"}else{
+          document.querySelector(".answer").style["display"] = "none"
+        };
       document.querySelector(".spanBut").style["display"] = "none";
      
       typeAnswer();
@@ -1157,25 +1248,40 @@ function getScore(){
       console.log('3 turns');
      
       document.querySelector(".question4").style['display']= "inline-block";
-      document.querySelector(".answer").style["display"] = "inline-block";
+      if(JSON.parse(localStorage.getItem("isCorrect")) !=true){
+        document.querySelector(".answer").style["display"] = "inline-block"};
      
       typeAnswer();
     }
     if(turns >=4){
       console.log("turns if tunrs ", turns);
       
-      document.querySelector(".question5").innerHTML = `Clue #5: The country's name begins with the letter ${JSON.parse(localStorage.getItem("country"))[0]}`
+      document.querySelector(".question5").innerHTML = `<strong>Clue #5:</strong> The country's name begins with the letter <strong>${JSON.parse(localStorage.getItem("country"))[0]}</strong>`
       document.querySelector(".question5").style["display"] = "inline-block";
-      document.querySelector(".answer").style["display"] = "inline-block";
+      if(JSON.parse(localStorage.getItem("isCorrect")) !=true){
+        document.querySelector(".answer").style["display"] = "inline-block"};
       document.querySelector(".spanBut").style["display"] = "none";
       typeAnswer();
     }
-  
+    if(turns ==5){
+      document.querySelector(".answer").style["display"] = "none";
   }
+}
 
     function displayFlag(){
+      console.log("country", JSON.parse(localStorage.getItem("country")))
+      flagWithUnderscore = JSON.parse(localStorage.getItem("country")).replaceAll(
+        " ",
+        "_"
+      );
+      console.log("flagwunderscore", flagWithUnderscore);
+      let pngName =
+      "<img src = Images/" +
+      flagWithUnderscore +
+      '.png  style="width:400px;height:250px;">';
+      document.querySelector(".showFlag").innerHTML = pngName;
       document.querySelector(".showFlag").style["display"] = "inline-block";
-      document.querySelector(".answer").style["display"] = "inline-block";
+      //document.querySelector(".answer").style["display"] = "inline-block";
       typeAnswer();
     }
 //start new game
@@ -1183,6 +1289,7 @@ function getScore(){
     startNew.addEventListener("click", startNewGame);
     function startNewGame(){
       turns = 0;
+      document.querySelector(".question1").style["display"] = "inline-block";
       randomNumber();
       getCountry();
       popAPI();
@@ -1197,7 +1304,7 @@ function getScore(){
       document.querySelector(".startGame").style["display"] = "none";
       document.querySelector(".showFlag").style["display"] = "none";
       document.querySelectorAll(".question").forEach((item)=>item.style["display"] = "none");
-      document.querySelector(".question2").style["display"] = "none";
+      //document.querySelector(".question2").style["display"] = "none";
       document.querySelectorAll(".feedback").forEach((item)=>item.style["display"] = "none");
       document.querySelector(".question1").style["display"] = "inline-block";
       document.querySelector(".answer").style["display"] = "inline-block";

@@ -30,10 +30,8 @@
     </div>
         <div class = "statsText">
         <h2>GeograFiend Stats</h2><br>
-        <p>
-        Game Score<br>
-        Games Played<br>
-        Average Score<br>
+        <p class = "scores">
+ 
         </p>
         </div>
     </div>
@@ -42,9 +40,9 @@
         <button class = "closeButtonHelp" >X</button>
     </div>
         <div class = "helpText">
-        <h2>About GeograFiend</h2>
+        <h2>About GeograFiend<br> the Country Quiz</h2>
         <br>
-        <p>Guess the country with as few clues as possible.</p>
+        <p>Guess the country. The fewer clues you need, the more points you score.<br>After each clue start typing the name of a country. Select the button with the country name to make a guess. If the guess is correct you have finished the game.</p>
         </div>
     </div>
     
@@ -53,8 +51,9 @@
     <h2 class = "quizDesc">The Country Quiz</h2>
     <div class = "instruction">Guess the Country / Territory with as Few Clues as Possible</div>
     <br>
-    <input type="text"  class = "answer1 answer" placeholder="Type country and select" autocomplete="autocomplete_off_randString">
+    <input type="text"  class = "answer" placeholder="Type country and select" autocomplete="autocomplete_off_randString" hidden>
     <div class = "feedback"></div>
+    <button class = "startGame" hidden>Have Another Go</button>
     <span class = "spanBut" hidden>
         <button type = button class="First  option" id = "firstLabel" ></button>
         <button type = button class="Second  option" id = "secondLabel"></button>
@@ -67,12 +66,11 @@
     <div class = "question4 question" ></div>
     <div class = "question3 question"></div>
     <div class = "question2 question"></div>
-    <div class = "showFlag" hidden></div>
+    <div class = "showFlag"></div>
     <div class = "question1 question"></div>
   
 <!--Predictive Text Buttons-->
 <div class = "wonGame"></div>
-<button class = "startGame" hidden>Have Another Go</button>
 </div>
  <br>
 <div class = "coffee">🖤 CountryFiend? <a href = "https://ko-fi.com/fkissling">Buy Me A Coffee</a>!</div>   

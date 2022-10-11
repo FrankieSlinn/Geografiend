@@ -10,7 +10,9 @@
   body{
     font-family: Arial,Helvetica,sans-serif; 
     color: #333;
-    font-size: 1.25rem;
+    font-size: 1rem;
+    margin-left: 1rem;
+    margin-right:1rem;
   }
 
   h1{
@@ -26,11 +28,14 @@
   nav {
     display: flex;
     justify-content: center;
-    gap: 5rem;
+    gap: 2rem;
     background-color: #fff;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     padding: 2rem;
     width: auto
+  }
+  .overallContainer{
+    margin: 0 1rem;
   }
 
   .nav-link {
@@ -50,9 +55,14 @@
   .statsText, .helpText{
     text-align: center;
     margin-top: -5.5rem;
+    margin-right: 1.5rem;
+    margin-left: 1.5rem;
+    padding: 0.5rem;
   }
   .close{
     text-align: right;
+    
+    
   }
   .closeButtonHelp, .closeButtonStats{
    font-weight: 700;
@@ -60,10 +70,20 @@
    border: none;
    font-size: 1.75rem;
    padding: 3rem;
+   margin: 0rem;
+   color: #333;
+  }
+
+  .closeButtonHelp:hover, .closeButtonStats:hover,
+  .closeButtonHelp:active, .closeButtonStats:active{
+    color: #777;
+    background-color: white;;
+    font-size: 1.75rem;
+    padding: 3rem;
   }
   
 button {
-  color: #ffffff !important;
+  color: #ffffff ;
   background-color: #1f5124;
   cursor: pointer;
   border-color: #1f5124;
@@ -75,25 +95,28 @@ button {
 
 button:hover,
 button:active {
-  color: #ffffff !important;
+  color: #ffffff;
   background-color: #2e7b36;
   border-color: #2e7b36;
   cursor: pointer;
 }
 
-
+.startGame{
+  margin-top: 0rem;
+  margin-bottom: 1rem;
+}
   .questions{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: auto;
   
   }
 
   .question{
     margin-top: 0.5rem;
     margin-bottom: 1rem;
-    font-weight: 700;
     text-align: center;
   }
   .answer{
@@ -104,30 +127,45 @@ button:active {
   .feedback{
     margin-bottom: 1.5rem;
     margin-top:0rem;
+    text-align: center;
   }
 
 /*The Online Quiz*/
   .quizDesc{
     letter-spacing: 0rem;
-    margin-top: -1rem;
+    margin-top: -1.5rem;
     text-align: center;
   }
 
   .instruction{
     margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
     text-align: center;
-    font-weight: 700;
+    font-weight: 500;
   }
 
   .spanBut{
     text-align:center;
     margin-top: -1.5rem;
-    padding: 0.5rem;
+    padding: 0.25rem;
+    
+  }
+  .option{
+   
+    text-align: center;
+
+    padding: 0.25rem;
+    align-items: center;
+    display: inline;
+
+  }
+  button .option{
+    font-size: 0.75rem;
   }
   .coffee{
     text-align: center;
     margin-top: 7rem;
-    font-size: 1rem;
+    font-size: 0.75rem;
   }
  
 
